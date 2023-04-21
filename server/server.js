@@ -9,7 +9,7 @@ import productRoutes from "./routes/productRoutes.js";
 import contactRoutes from "./routes/contactusRoute.js";
 import cors from "cors";
 import path from "path";
-import { fileURLToPath } from "url";
+
 
 //configure env
 dotenv.config();
@@ -17,9 +17,6 @@ dotenv.config();
 //database config
 connectDB();
 
-//esmodule fix
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // rest object
 const app = express();
@@ -28,7 +25,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(express.static(path.join(__dirname, "./client/build")));
+
 
 //routes
 app.use("/api/v1/auth", authRoutes);
@@ -36,10 +33,7 @@ app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/contact", contactRoutes);
 
-//rest api
-app.use("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
+
 
 //PORT
 const PORT = process.env.PORT || 8080;
